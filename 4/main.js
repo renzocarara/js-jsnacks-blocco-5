@@ -30,10 +30,12 @@ $(document).ready(function() {
 
     // VERSIONE AMPLIATA
     // -------------------
-    // PREMESSA: i 2 array da fondere possono avere lunghezze diverse
+    // CASO DA CONSIDERARE: i 2 array da fondere possono avere lunghezze diverse
 
-    var numeri = [1, 3, 5, 7, 9, 23, 13]; // primo array da fondere
-    var lettere = ['w', 'x', 'y', 'z']; // secondo array da fondere
+    var numeri = []; // primo array da fondere
+    var lettere = []; // secondo array da fondere
+
+    valorizzaArray(); // valorizza i 2 array con lunghezze ed elementi casuali
 
     var fusione = fondi(numeri, lettere); // invoco funzione che mi ritorna un array come risultato
 
@@ -41,28 +43,50 @@ $(document).ready(function() {
     console.log("secondo array", lettere);
     console.log("risultato della fusione:", fusione);
 
-    function fondi(array1, array2) {
-        var fuso = [];
-        var lunghezzaMinima = array1.length; // assumo che array1 possa essere l'array piu' corto
-        var array2PiuLungo = false,
-            array1PiuLungo = false;
 
-        // per stabilire qual sarà la lunghzza massima del ciclo di scansione,
-        // valuto le lunghezze dei 2 array
-        if (array1.length < array2.length) {
-            // array2 è più lungo
-            lunghezzaMinima = array1.length;
-            array2PiuLungo = true;
+    // ---------------------------- FUNCTIONs --------------------------------------
+    function valorizzaArray() {
+
+        // genero una lunghezza casuale da 1 a 10 per entrambi gli array
+        numeriLen = numeroRandom(1, 10);
+        lettereLen = numeroRandom(1, 10);
+
+        while (numeri.length < numeriLen) {
+            // genero un numeo da 1 a 100
+            numeri.push(numeroRandom(1, 100));
         }
-        if (array2.length < array1.length) {
-            // array1 è più lungo
-            lunghezzaMinima = array2.length;
-            array1PiuLungo = true;
+        while (lettere.length < lettereLen) {
+            // genero una lettera dell'alfabeto
+            var caratteri = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            lettera = caratteri.charAt(numeroRandom(0, (caratteri.length - 1)));
+            lettere.push(lettera);
         }
-        // potrei non essere entrato in nessuno dei due 'if' qui sopra nel caso in cui
+    }
+
+
+    function numeroRandom(min, max) {
+        // genera un numero casuale intero tra min e max
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+    function fondi(array1, array2) {
+
+        var fuso = []; // array per il risultato finale
+        var lunghezzaMinima = Math.min(array1.length, array2.length); // lunghezza array più corto
+        var eccedenza = []; // array per contenere eventuali elementi in eccesso
+
+        // verifico se c'è un array più lungo dell'altro, nel caso salvo gli elementi in eccesso dentro un terzo array
+        if (array1.length < array2.length) { // array2 è più lungo
+            eccedenza = array2.slice(lunghezzaMinima); // metto in un array la parte eccedente di array2
+        }
+        if (array2.length < array1.length) { // array1 è più lungo
+            eccedenza = array1.slice(lunghezzaMinima); // metto in un array la parte eccedente di array1
+        }
+        // NOTA: potrei non essere entrato in nessuno dei due 'if' qui sopra nel caso in cui
         // i 2 array abbiano la stessa lunghezza
 
-        // ciclo per un numero di volte pari alla lunghezza dell'array più corto,
+        // ciclo per un numero di volte pari alla lunghezza di dell'array più corto,
         // per essere sicuro di poter leggere un elemento da entrambi gli array
         for (var i = 0; i < lunghezzaMinima; i++) {
             fuso.push(array1[i]);
@@ -71,15 +95,8 @@ $(document).ready(function() {
 
         // adesso mi rimane l'eventuale parte di array "in eccesso"
         // da concatenare all'array finale (risultato della fusione)
-        // se gli array hanno lunghezza uguale non entro in nessuno dei 2 'if' che seguono
-
-        if (array1PiuLungo) {
-            fuso = fuso.concat(array1.slice(lunghezzaMinima, array1.length));
-        }
-
-        if (array2PiuLungo) {
-            fuso = fuso.concat(array2.slice(lunghezzaMinima, array2.length));
-        }
+        // se gli array hanno lunghezza uguale l'array da concatenare è rimasto vuoto
+        fuso = fuso.concat(eccedenza);
 
         return fuso;
     }
