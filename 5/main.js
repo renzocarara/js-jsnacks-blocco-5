@@ -16,7 +16,6 @@ $(document).ready(function() {
     while (originale.length < arrayLength) {
         originale.push(numeroRandom(minNum, maxNum));
     }
-    console.log(originale);
 
     // genero casualmente i due numeri 'a' e 'b'
     // 'b' deve essere al massimo uguale alla lunghezza dell'array "originale"
@@ -45,8 +44,11 @@ $(document).ready(function() {
 
     function arraySection(array, start, end) {
         var section = [];
-
-
+        // scorro l'array che ha elementi indicizzati a partire da zero! come sempre!
+        for (var i = start - 1; i < end; i++) {
+            section.push(array[i]);
+        }
+        // ritorno l'array con gli elementi estratti
         return section;
     }
 
