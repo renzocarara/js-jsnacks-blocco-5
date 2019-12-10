@@ -5,11 +5,10 @@
 // -----------------------------------------------------------------------------
 $(document).ready(function() {
 
-    numeri = [3, 5, 7, 9]; // primo array da fondere
-    lettere = ['w', 'x', 'y', 'z']; // secondo array da fondere
-    fusione = []; // conterrà il risultato della fusione dei 2 array
+    var numeri = [3, 5, 7, 9]; // primo array da fondere
+    var lettere = ['w', 'x', 'y', 'z']; // secondo array da fondere
 
-    fusione = fondi(numeri, lettere); // invoco funzione che mi ritorna un array come risultato
+    var fusione = fondi(numeri, lettere); // invoco funzione che mi ritorna un array come risultato
 
     console.log("primo array", numeri);
     console.log("secondo array", lettere);
