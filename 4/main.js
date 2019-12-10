@@ -15,7 +15,7 @@ $(document).ready(function() {
     console.log("secondo array", lettere);
     console.log("risultato della fusione:", fusione);
 
-    function fondi(array1, array2, fusione) {
+    function fondi(array1, array2) {
         var fuso = [];
         for (var i = 0; i < array1.length; i++) {
             // inserisco alternativamente gli elementi dei 2 array in ingresso
